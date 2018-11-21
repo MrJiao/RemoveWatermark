@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        File file = new File(getFolderPath());
+        File file =FileUtil.formatFile(new File(getFolderPath()));
         //Collection<File> files = FileUtils.listFiles(folder, new String[]{"jpg"}, true);
         Collection<File> files = new ArrayList<>();
         if(file.isFile()){
@@ -28,6 +28,8 @@ public class Main {
     }
 
 
+
+
     private static String getFolderPath() {
         String input ="";
         while (true) {
@@ -40,6 +42,8 @@ public class Main {
                 L.d("输入错误");
             }
         }
+        if(input.charAt(0)==34 && input.charAt(input.length()-1)==34)
+            input = input.substring(1,input.length()-1);
         return input;
     }
 
@@ -49,6 +53,7 @@ public class Main {
         File[] files = folderPath.listFiles();
         for (File f : files) {
             if(f==null)continue;
+            f = FileUtil.formatFile(f);
             if(f.isDirectory()){
                 getPicFile(f);
             }else if(f.getName().endsWith(".jpg")){
