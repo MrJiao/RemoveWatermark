@@ -1,6 +1,8 @@
 package com.jackson.pic;
 
 
+import com.jackson.pic.funny.HappyTime;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        HappyTime.start();
+
         File file =FileUtil.formatFile(new File(getFolderPath()));
         //Collection<File> files = FileUtils.listFiles(folder, new String[]{"jpg"}, true);
         Collection<File> files = new ArrayList<>();
