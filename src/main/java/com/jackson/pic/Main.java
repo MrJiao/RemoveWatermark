@@ -15,6 +15,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        L.d("加载中...");
         HappyTime.start();
 
         File file =FileUtil.formatFile(new File(getFolderPath()));
