@@ -1,5 +1,4 @@
-import com.jackson.pic.Area;
-import com.jackson.pic.L;
+import com.jackson.pic.core.Area;
 import org.junit.Test;
 
 /**

@@ -1,4 +1,4 @@
-package com.jackson.pic;
+package com.jackson.pic.utils;
 
 /**
  * Create by: Jackson

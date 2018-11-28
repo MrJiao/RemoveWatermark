@@ -2,7 +2,6 @@ package com.jackson.pic.funny.request;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.jackson.pic.L;
 import com.jackson.pic.funny.core.MyRetryTemplate;
 import com.jackson.pic.funny.utils.StringUtils;
 import org.apache.http.HttpEntity;

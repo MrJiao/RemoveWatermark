@@ -1,4 +1,6 @@
-package com.jackson.pic;
+package com.jackson.pic.utils;
+
+import com.jackson.pic.utils.StringUtils;
 
 /**
  * Create by: Jackson

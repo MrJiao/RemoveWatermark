@@ -1,7 +1,7 @@
 package com.jackson.pic.funny.utils;
 
 
-import com.jackson.pic.L;
+import com.jackson.pic.utils.L;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.jackson.pic.funny.test;
 
-import com.jackson.pic.L;
+import com.jackson.pic.utils.L;
 import com.jackson.pic.funny.domain.FunnyBean;
 import com.jackson.pic.funny.domain.FunnyQuestion;
 import com.jackson.pic.funny.utils.HappyLogUtil;

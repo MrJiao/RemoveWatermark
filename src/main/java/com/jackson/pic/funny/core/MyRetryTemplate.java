@@ -1,7 +1,7 @@
 package com.jackson.pic.funny.core;
 
 
-import com.jackson.pic.L;
+import com.jackson.pic.utils.L;
 
 /**
  * Create by: Jackson
