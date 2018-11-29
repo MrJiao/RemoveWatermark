@@ -13,8 +13,8 @@ public class CopyAreaCompont {
 
     List<CopyArea> copyAreaList = new ArrayList<>();
 
-    int width;
-    int height;
+    int width;//新图的宽
+    int height;//新图的高
 
     public int getWidth() {
         return width;
@@ -62,7 +62,6 @@ public class CopyAreaCompont {
 
     }
 
-    private int deep = 200;
 
 
     private CopyArea getDateArea(){
@@ -87,7 +86,7 @@ public class CopyAreaCompont {
             for (int yi=874;yi<1569;yi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     area.width = xi-91;
                     break a;
                 }
@@ -98,7 +97,7 @@ public class CopyAreaCompont {
             for (int xi=91;xi<bufImage.getWidth();xi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     area.height = yi-874;
                     break a;
                 }
@@ -107,8 +106,7 @@ public class CopyAreaCompont {
 
         return area;
     }
-
-
+    
     private CopyArea getIconArea(){
 
         CopyArea area = new CopyArea();
@@ -121,7 +119,7 @@ public class CopyAreaCompont {
             for (int yi=466;yi<874;yi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     right = xi;
                     break a;
                 }
@@ -132,7 +130,7 @@ public class CopyAreaCompont {
             for (int xi=91;xi<bufImage.getWidth();xi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     bottom = yi;
                     break a;
                 }
@@ -144,7 +142,7 @@ public class CopyAreaCompont {
             for (int yi=466;yi<874;yi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     left = xi;
                     break a;
                 }
@@ -155,7 +153,7 @@ public class CopyAreaCompont {
             for (int xi=91;xi<bufImage.getWidth();xi++){
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
-                if(color.getBlue()<deep){
+                if(isEnoughDeep(color)){
                     top = yi;
                     break a;
                 }
@@ -170,9 +168,10 @@ public class CopyAreaCompont {
         return area;
     }
 
-
-
-
-
+    private int deep = 200;//控制查找点颜色深度的
+    private boolean isEnoughDeep(Color color){
+        return color.getBlue()<deep || color.getGreen()<deep|| color.getRed()<deep;
+    }
+    
 
 }

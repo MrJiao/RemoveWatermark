@@ -21,6 +21,11 @@ public class ImageCompont {
         ImageIO.write(myImage.getOutput(), "jpg", new File(resultFolder,file.getName()));
     }
 
+    /**
+     * 把商标切缩成小图
+     * @param pic
+     * @return
+     */
     private MyImage clip(MyImage pic) {
         CopyAreaCompont copyAreaCompont = new CopyAreaCompont();
         copyAreaCompont.init(pic);
@@ -86,16 +91,8 @@ public class ImageCompont {
             return graphics;
         }
 
-        public void setGraphics(Graphics2D graphics) {
-            this.graphics = graphics;
-        }
-
         public BufferedImage getOutput() {
             return output;
-        }
-
-        public void setOutput(BufferedImage output) {
-            this.output = output;
         }
 
         public void setBackGround(Color color) {
