@@ -13,5 +13,6 @@ public class CopyArea {
    public int toX;
    public int toY;
 
-
+   public int topPadding=0;
+   public int bottomPadding=0;
 }

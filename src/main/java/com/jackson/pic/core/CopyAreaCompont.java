@@ -1,5 +1,7 @@
 package com.jackson.pic.core;
 
+import com.jackson.pic.Config;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -42,10 +44,15 @@ public class CopyAreaCompont {
 
         calculateWidthAndHeight(copyAreaList);
 
+        dateArea.toX=0;
+        dateArea.toY=0+dateArea.topPadding;
 
-        textArea.toY = dateArea.height+iconArea.height;
         iconArea.toX = (width-iconArea.width)/2;
-        iconArea.toY = dateArea.height;
+        iconArea.toY = dateArea.toY+dateArea.height+dateArea.bottomPadding+iconArea.topPadding;
+
+        textArea.toX=0;
+        textArea.toY = iconArea.toY +iconArea.height+iconArea.bottomPadding+textArea.topPadding;
+
 
     }
 
@@ -54,7 +61,7 @@ public class CopyAreaCompont {
             if(width<area.width){
                 width = area.width;
             }
-            height+=area.height;
+            height+=area.height+area.bottomPadding+area.topPadding;
         }
 
         width +=8;
@@ -70,8 +77,7 @@ public class CopyAreaCompont {
         area.y = 348;
         area.width = 333;
         area.height = 118;
-        area.toX=0;
-        area.toY=0;
+
         return area;
     }
 
@@ -79,7 +85,7 @@ public class CopyAreaCompont {
         CopyArea area = new CopyArea();
         area.x = 91;
         area.y = 874;
-        area.toX=0;
+
         //差toY；
 
         a :for(int xi=bufImage.getWidth()-1;xi>0;xi--){
@@ -149,8 +155,10 @@ public class CopyAreaCompont {
             }
         }
 
-        a :for(int yi=466;yi<bottom;yi++){
+        a :for(int yi=438;yi<bottom;yi++){
             for (int xi=91;xi<bufImage.getWidth();xi++){
+                if(yi<463 && xi<194)
+                    continue ;
                 int rgb = bufImage.getRGB(xi, yi);
                 Color color = new Color(rgb);
                 if(isEnoughDeep(color)){
@@ -160,11 +168,12 @@ public class CopyAreaCompont {
             }
         }
 
-        area.x = left;
-        area.y = top;
-        area.width = right - left;
-        area.height = bottom-top;
-
+        area.x = left-2;
+        area.y = top-2;
+        area.width = right - left+5;
+        area.height = bottom-top+5;
+        area.topPadding = Config.topPadding;
+        area.bottomPadding = Config.bottomPadding;
         return area;
     }
 

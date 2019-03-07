@@ -6,6 +6,7 @@
 
     <groupId>com.jackson.pic</groupId>
     <artifactId>remove_watermark</artifactId>
+
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
@@ -34,6 +35,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jackson.common</groupId>
+            <artifactId>update</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

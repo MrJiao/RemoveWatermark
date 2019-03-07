@@ -5,24 +5,28 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
+
+import static com.jackson.pic.Config.worldWidth;
+import static java.math.BigDecimal.ROUND_HALF_DOWN;
 
 /**
  * Create by: Jackson
  */
 public class ImageCompont {
 
-    public void handle(File file) throws IOException {
+    public MyImage handle(File file) throws IOException {
         BufferedImage image = ImageIO.read(file);
         MyImage pic = remove(image);
-        MyImage myImage = clip(pic);
-        File resultFolder = new File(file.getParentFile(), "result");
-        resultFolder.mkdir();
-        ImageIO.write(myImage.getOutput(), "jpg", new File(resultFolder,file.getName()));
+        pic = clip(pic);
+      //  pic = scale(pic);
+        return pic;
     }
 
     /**
      * 把商标切缩成小图
+     *
      * @param pic
      * @return
      */
@@ -33,33 +37,50 @@ public class ImageCompont {
         List<CopyArea> copyAreaList = copyAreaCompont.getCopyArea();
         BufferedImage removeBuf = pic.getOutput();
 
-        MyImage clipImage = create(copyAreaCompont.getWidth(), copyAreaCompont.getHeight());
+        MyImage clipImage = create(copyAreaCompont.getWidth(), copyAreaCompont.getHeight(), removeBuf.getType());
         clipImage.setBackGround(new Color(-1));
         for (CopyArea copyArea : copyAreaList) {
             BufferedImage subimage = removeBuf.getSubimage(copyArea.x, copyArea.y, copyArea.width, copyArea.height);
             clipImage.getGraphics().drawImage(subimage, copyArea.toX, copyArea.toY, null);
         }
-
+        clipImage.getGraphics().dispose();
         return clipImage;
     }
 
 
-    private MyImage create(int width, int height) {
-        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
+    private MyImage scale(MyImage pic) {
+        BigDecimal widthBig = new BigDecimal(pic.getOutput().getWidth());
+        BigDecimal heightBig = new BigDecimal(pic.getOutput().getHeight());
+        BigDecimal worldWidthBig = new BigDecimal(worldWidth);
+        int worldHeight = heightBig.divide(widthBig, 5, ROUND_HALF_DOWN).multiply(worldWidthBig).intValue();
+
+        MyImage myImage = create(worldWidth, worldHeight, pic.getOutput().getType());
+        myImage.getGraphics().drawImage(pic.getOutput().getScaledInstance(worldWidth, worldHeight, java.awt.Image.SCALE_SMOOTH), 0, 0, null);
+        myImage.getGraphics().dispose();
+        return myImage;
+    }
+
+
+    private MyImage create(int width, int height, int imageType) {
+        BufferedImage output = new BufferedImage(width, height, imageType);
         Graphics2D graphics = output.createGraphics();
         return new MyImage(graphics, output);
     }
 
-
+    /**
+     * 去水印
+     *
+     * @param image
+     * @return
+     * @throws IOException
+     */
     public MyImage remove(BufferedImage image) throws IOException {
         AreaCompont areaCompont = new AreaCompont();
         int height = image.getHeight();
         int width = image.getWidth();
-        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
-        Graphics2D graphics = output.createGraphics();
-        MyImage myImage = new MyImage(graphics, output);
-        int a = 210;
-        graphics.drawImage(image, 0, 0, null); //画图
+        MyImage myImage = create(width, height, image.getType());
+        int a = 200;
+        myImage.getGraphics().drawImage(image, 0, 0, null); //画图
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (!areaCompont.isContains(i, j)) continue;
@@ -68,12 +89,13 @@ public class ImageCompont {
                 int red = color.getRed();
                 int blue = color.getBlue();
                 int green = color.getGreen();
-                if (red > a && blue > a && green > a) {
-                    output.setRGB(i, j, -1);
+                if (red > a || blue > a || green > a) {
+                    myImage.getOutput().setRGB(i, j, -1);
 
                 }
             }
         }
+        myImage.getGraphics().dispose();
         return myImage;
     }
 
