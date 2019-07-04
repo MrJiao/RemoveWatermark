@@ -33,27 +33,54 @@ public class CopyAreaCompont {
     ImageCompont.MyImage pic;
     BufferedImage bufImage;
     public void init(ImageCompont.MyImage pic) {
-        this.pic = pic;
-        this.bufImage = pic.getOutput();
+        bufImage = pic.getOutput();
+        CopyArea timeArea = getTimeArea();
+        CopyArea lineArea = getLineArea();
         CopyArea dateArea = getDateArea();
-        CopyArea textArea = getTextArea();
         CopyArea iconArea = getIconArea();
-        copyAreaList.add(dateArea);
-        copyAreaList.add(textArea);
-        copyAreaList.add(iconArea);
+        CopyArea textArea = getTextArea();
 
+        lineArea.topPadding=10;
+        dateArea.toX=7;
+        textArea.toX=7;
+
+        addCopyArea(copyAreaList,timeArea);
+        addCopyArea(copyAreaList,lineArea);
+        addCopyArea(copyAreaList,dateArea);
+        addCopyArea(copyAreaList,iconArea);
+        addCopyArea(copyAreaList,textArea);
         calculateWidthAndHeight(copyAreaList);
-
-        dateArea.toX=0;
-        dateArea.toY=0+dateArea.topPadding;
-
         iconArea.toX = (width-iconArea.width)/2;
-        iconArea.toY = dateArea.toY+dateArea.height+dateArea.bottomPadding+iconArea.topPadding;
 
-        textArea.toX=0;
-        textArea.toY = iconArea.toY +iconArea.height+iconArea.bottomPadding+textArea.topPadding;
+    }
+
+    private void addCopyArea(List<CopyArea> copyAreaList,CopyArea copyArea){
+        if(copyAreaList.size()==0){
+            copyArea.toY = copyArea.topPadding;
+        }else {
+            CopyArea area = copyAreaList.get(copyAreaList.size() - 1);
+            copyArea.toY = area.toY+area.height+area.bottomPadding+copyArea.topPadding;
+        }
+        copyAreaList.add(copyArea);
+    }
 
 
+    private CopyArea getTimeArea() {
+        CopyArea area = new CopyArea();
+        area.x = 71;
+        area.y = 213;
+        area.width = 1048;
+        area.height = 94;
+        return area;
+    }
+
+    private CopyArea getLineArea() {
+        CopyArea area = new CopyArea();
+        area.x = 71;
+        area.y = 331;
+        area.width = 1048;
+        area.height = 12;
+        return area;
     }
 
     private void calculateWidthAndHeight(List<CopyArea> copyAreaList) {

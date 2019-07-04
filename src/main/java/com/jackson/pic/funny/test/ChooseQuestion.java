@@ -8,5 +8,5 @@ import com.jackson.pic.funny.test.question.*;
  */
 public class ChooseQuestion {
 
-    public FunnyBean question = new Question6().get();
+    public FunnyBean question = new Question5().get();
 }
